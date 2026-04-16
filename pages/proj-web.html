@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light" data-lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sites web TIM — Luego Pereira</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d0d0d'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='800' font-size='13' fill='%23f0ece3'>LP</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@300;400&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../styles/style.css" />
+</head>
+
+<body>
+    <div id="page-transition"></div>
+    </div>
+    <!-- MENU FLOTTANT -->
+    <div id="menu-overlay">
+        <ul class="menu-float-list">
+            <li><a href="../index.html" class="menu-float-link" data-page data-fr="Accueil" data-en="Home">Accueil</a></li>
+            <li><a href="studio.html" class="menu-float-link" data-page data-fr="&Agrave; propos"
+                    data-en="About">&Agrave; propos</a></li>
+            <li><a href="work.html" class="menu-float-link" data-page data-fr="Projets" data-en="Projects">Projets</a>
+            </li>
+            <li><a href="contact.html" class="menu-float-link" data-page>Contact</a></li>
+        </ul>
+    </div>
+
+    <nav id="nav">
+        <a href="../index.html" class="nav-logo" data-page>Luego Pereira</a>
+        <div class="nav-right">
+            <a href="work.html" class="nav-pill nav-pill-ghost" data-page data-fr="&#8592; Projets"
+                data-en="&#8592; Projects">&#8592; Projets</a>
+            <button class="nav-control" id="lang-toggle">EN</button>
+            <button class="nav-control" id="theme-toggle" data-dark="0">&#9790;</button>
+            <button class="nav-control" id="sound-toggle" data-on="1">&#9834;</button>
+            <button class="nav-pill nav-pill-dark js-menu-open">MENU <span class="nav-pill-dots">&#8943;</span></button>
+        </div>
+    </nav>
+
+    <div class="proj-hero" style="background:linear-gradient(135deg,#08000f,#0d0d0d);">
+        <div class="proj-hero-bg" style="color:#7F77DD;">&#9672;</div>
+        <div class="proj-hero-kicker" data-fr="Web &middot; HTML/CSS &middot; TIM &middot; 2025"
+            data-en="Web &middot; HTML/CSS &middot; TIM &middot; 2025">Web &middot; HTML/CSS &middot; TIM &middot; 2025
+        </div>
+        <h1 class="proj-hero-title">
+            <span data-fr="Sites web" data-en="Websites">Sites web</span><br>
+            <span class="muted-word" data-fr="Projets TIM" data-en="TIM projects">Projets TIM</span>
+        </h1>
+        <p class="proj-hero-sub"
+            data-fr="Conception et développement de sites web dans le cadre de mon DEC en Techniques d'intégration multimédia. Du design éditorial au code responsive, chaque projet est une exploration créative."
+            data-en="Design and development of websites as part of my DEC in Multimedia Integration Techniques. From editorial design to responsive code, each project is a creative exploration.">
+            Conception et développement de sites web dans le cadre de mon DEC en Techniques d'intégration multimédia. Du
+            design éditorial au code responsive, chaque projet est une exploration créative.</p>
+    </div>
+
+    <div class="proj-content">
+        <p class="proj-big-quote reveal">
+            <span data-fr="Du design à la ligne de code," data-en="From design to line of code,">Du design à la ligne de
+                code,</span><br>
+            <span class="muted" data-fr="chaque pixel est intentionnel." data-en="every pixel is intentional.">chaque
+                pixel est intentionnel.</span>
+        </p>
+        <p class="proj-body-text reveal"
+            data-fr="Projets web réalisés au Cégep de Matane : sites vitrines, portfolios, expériences interactives. Maîtrise de HTML, CSS, JavaScript ainsi que des principes UX/UI. Chaque projet explore une direction artistique distincte tout en restant fonctionnel et accessible."
+            data-en="Web projects completed at Cegep de Matane: showcase sites, portfolios, interactive experiences. Proficiency in HTML, CSS, JavaScript and UX/UI principles. Each project explores a distinct artistic direction while remaining functional and accessible.">
+            Projets web réalisés au Cégep de Matane : sites vitrines, portfolios, expériences interactives. Maîtrise de
+            HTML, CSS, JavaScript ainsi que des principes UX/UI. Chaque projet explore une direction artistique
+            distincte tout en restant fonctionnel et accessible.</p>
+        <div class="proj-tags reveal">
+            <span class="proj-tag">HTML / CSS</span>
+            <span class="proj-tag">JavaScript</span>
+            <span class="proj-tag">UX/UI</span>
+            <span class="proj-tag" data-fr="Responsive" data-en="Responsive">Responsive</span>
+            <span class="proj-tag" data-fr="Design éditorial" data-en="Editorial design">Design éditorial</span>
+            <span class="proj-tag">TIM</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem;" class="reveal">
+            <div style="aspect-ratio:16/9;border-radius:12px;overflow:hidden;">
+                <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80" alt="Webdesign"
+                    style="width:100%;height:100%;object-fit:cover;display:block;" />
+            </div>
+            <div style="aspect-ratio:16/9;border-radius:12px;overflow:hidden;">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80"
+                    alt="Developpement web" style="width:100%;height:100%;object-fit:cover;display:block;" />
+            </div>
+        </div>
+        <div style="margin-top:1rem;border-radius:12px;overflow:hidden;" class="reveal">
+            <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&q=80" alt="Interface web"
+                style="width:100%;height:280px;object-fit:cover;display:block;" />
+        </div>
+    </div>
+
+    <!-- Loop back to first project -->
+            <div id="next-pct">0%</div>
+        </div>
+    </div>
+
+    <footer>
+        <a href="../index.html" class="footer-pill" data-page>HOME &#8599;</a>
+        <a href="work.html" class="footer-pill" data-page>WORK &#8599;</a>
+        <a href="contact.html" class="footer-pill" data-page>CONTACT &#8599;</a>
+        <button class="footer-pill footer-up" onclick="window.scrollTo({top:0,behavior:'smooth'})">GO UP
+            &#8593;</button>
+    </footer>
+    <script src="../scripts/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -i '' 's|href=\"style\\\\.css\"|href=\"styles/style.css\"|g' index.html)",
+      "Bash(sed -i '' 's|src=\"script\\\\.js\"|src=\"scripts/script.js\"|g' index.html)",
+      "Bash(sed -i '' 's|href=\"studio\\\\.html\"|href=\"pages/studio.html\"|g' index.html)",
+      "Bash(sed -i '' 's|href=\"work\\\\.html\"|href=\"pages/work.html\"|g' index.html)",
+      "Bash(sed -i '' 's|href=\"contact\\\\.html\"|href=\"pages/contact.html\"|g' index.html)",
+      "Bash(rsync -a \"/Users/luegopereira/Downloads/TP1 final_pereiraL/TP1.final_pereiraL.mp4\" \"/Users/luegopereira/Desktop/Projet_perso/assets/\")",
+      "Bash(python3 -c \"import sys; [print\\(repr\\(l.rstrip\\(\\)\\)\\) for l in sys.stdin]\")",
+      "Bash(mv \"Capture d'écran 2024-02-07 à 16.09.55.png\" \"capture-malte-1.png\")",
+      "Bash(mv \"Capture d'écran 2024-02-07 à 16.17.40.png\" \"capture-malte-2.png\")",
+      "Bash(mv \"Capture d'écran 2024-02-07 à 17.50.38.png\" \"capture-malte-3.png\")",
+      "Bash(mv \"Capture d'écran 2024-02-07 à 17.56.20.png\" \"capture-malte-4.png\")",
+      "Bash(mv \"AQMmuu0iN-x0bRIr4lAp2Gtuj4IJqjWEigwCi-Nm-a2j6T9L2LsLLTat6McXrKkKSnBvNxT4BZ0VBCCbVUFUwigTBf42TYQtG4J3bro.MP4\" \"social-video-1.mp4\")",
+      "Bash(python3 -c ':*)",
+      "Bash(python3 -)",
+      "Read(//private/tmp/**)",
+      "Bash(unzip -o \"/Users/luegopereira/Desktop/Nouveau dossier contenant des éléments.zip\" -d nouveau_dossier)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(php --version)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "mcp__Claude_in_Chrome__navigate",
+      "mcp__Claude_in_Chrome__computer",
+      "Bash(python3 -m http.server 3334)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3334/pages/work.html)",
+      "Bash(pkill -f \"http.server 3334\")",
+      "Bash(brew install:*)",
+      "Bash(python3)",
+      "Bash(python3 serve.py)",
+      "Bash(python3 -m http.server 3333)",
+      "Bash(echo \"Server PID: $!\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3333/)"
+    ]
+  }
+}

@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light" data-lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Work — Luego Pereira</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d0d0d'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='800' font-size='13' fill='%23f0ece3'>LP</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles/style.css" />
+
+    <style>
+        /* ================================================
+           WORK PAGE — SCROLL CAROUSEL
+           Inspiré de mescubook.com
+           ================================================ */
+
+        /* Force dark + overflow:hidden en mode slider */
+        body.wk-page {
+            background: #080808 !important;
+            overflow: hidden;
+        }
+
+        body.wk-list-mode {
+            overflow-y: auto;
+        }
+
+        /* Nav adapté fond noir */
+        .wk-page #nav .nav-logo { color: #e8edf0; }
+        .wk-page #nav .nav-control { color: #e8edf0; background: rgba(232,237,240,.08); }
+        .wk-page #nav .nav-control:hover { background: rgba(232,237,240,.16); }
+        .wk-page #nav .nav-pill-ghost { background: rgba(232,237,240,.08); color: #e8edf0; }
+        .wk-page #nav .nav-pill-dark { background: #e8edf0; color: #0d0d0d; }
+        .wk-page #menu-overlay { background: rgba(12,12,12,.95); border-color: rgba(232,237,240,.08); }
+        .wk-page .menu-float-link { color: rgba(232,237,240,.3); }
+        .wk-page .menu-float-link:hover { color: #e8edf0; }
+        [data-theme="dark"] .wk-page #nav .nav-control { background: rgba(232,237,240,.06); }
+
+        /* ------------------------------------------------
+           LAYOUT PRINCIPAL — 3 colonnes
+           ------------------------------------------------ */
+        .wk-wrap {
+            position: fixed;
+            top: 64px;
+            left: 0; right: 0; bottom: 0;
+            display: grid;
+            grid-template-columns: 80px 1fr 80px;
+            overflow: hidden;
+            background: #080808;
+            z-index: 1;
+        }
+
+        /* ------------------------------------------------
+           SIDEBAR GAUCHE
+           ------------------------------------------------ */
+        .wk-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 0 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .wk-counter {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .15rem;
+        }
+
+        .wk-cur-num {
+            font-size: 30px;
+            font-weight: 800;
+            color: #e8edf0;
+            letter-spacing: -.05em;
+            line-height: 1;
+            transition: all .4s ease;
+        }
+
+        .wk-total-str {
+            font-family: 'DM Mono', monospace;
+            font-size: 9px;
+            color: rgba(232,237,240,.25);
+            letter-spacing: .12em;
+        }
+
+        .wk-vert {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            font-family: 'DM Mono', monospace;
+            font-size: 7.5px;
+            letter-spacing: .28em;
+            color: rgba(232,237,240,.16);
+            text-transform: uppercase;
+            user-select: none;
+        }
+
+        /* ------------------------------------------------
+           STAGE — zone centrale
+           ------------------------------------------------ */
+        .wk-stage {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wk-slides-wrap {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ------------------------------------------------
+           SLIDE
+           ------------------------------------------------ */
+        .wk-slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0 .5rem 2.5rem;
+            opacity: 0;
+            pointer-events: none;
+            will-change: opacity, transform;
+        }
+
+        .wk-slide.wk-active {
+            pointer-events: all;
+        }
+
+        /* Cadre média */
+        .wk-media {
+            width: min(680px, 90%);
+            flex-shrink: 0;
+            height: min(420px, calc(100vh - 295px));
+            border-radius: 14px;
+            overflow: hidden;
+            background: #141414;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .wk-media-inner {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: transform .7s cubic-bezier(.16,1,.3,1);
+            will-change: transform;
+        }
+
+        /* Vidéo en carrousel */
+        .wk-vid {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform .7s cubic-bezier(.16,1,.3,1);
+        }
+        .wk-media:hover .wk-vid { transform: scale(1.05); }
+
+        .wk-media:hover .wk-media-inner {
+            transform: scale(1.05);
+        }
+
+        /* Label "VOIR LE PROJET" au survol */
+        .wk-media-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0);
+            transition: background .35s;
+        }
+
+        .wk-media-label {
+            opacity: 0;
+            transform: scale(.82) translateY(4px);
+            transition: opacity .3s, transform .3s;
+            background: rgba(232,237,240,.1);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(232,237,240,.18);
+            border-radius: 50px;
+            padding: .55rem 1.4rem;
+            font-size: 11px;
+            font-weight: 700;
+            color: #e8edf0;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .wk-media:hover .wk-media-overlay {
+            background: rgba(0,0,0,.2);
+        }
+
+        .wk-media:hover .wk-media-label {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        /* Zone info sous le cadre */
+        .wk-info {
+            width: min(680px, 90%);
+            margin-top: 1.2rem;
+        }
+
+        .wk-client {
+            font-family: 'DM Mono', monospace;
+            font-size: 9px;
+            color: rgba(232,237,240,.32);
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            margin-bottom: .55rem;
+        }
+
+        /* Titre — chaque lettre est un span */
+        .wk-title {
+            font-size: clamp(26px, 4.8vw, 60px);
+            font-weight: 800;
+            letter-spacing: -.04em;
+            line-height: .88;
+            color: #e8edf0;
+            text-transform: uppercase;
+            user-select: none;
+            cursor: default;
+            margin-bottom: .8rem;
+        }
+
+        .wk-letter {
+            display: inline-block;
+            will-change: transform;
+        }
+
+        .wk-letter-br {
+            display: block;
+            height: .1em;
+        }
+
+        .wk-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wk-tags {
+            font-family: 'DM Mono', monospace;
+            font-size: 8px;
+            color: rgba(232,237,240,.28);
+            letter-spacing: .14em;
+            text-transform: uppercase;
+        }
+
+        .wk-year {
+            font-family: 'DM Mono', monospace;
+            font-size: 9px;
+            color: rgba(232,237,240,.22);
+            letter-spacing: .06em;
+        }
+
+        /* Indicateur scroll en bas */
+        .wk-scroll-hint {
+            position: absolute;
+            bottom: .8rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: .45rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 7.5px;
+            letter-spacing: .24em;
+            color: rgba(232,237,240,.15);
+            text-transform: uppercase;
+            animation: wkBob 2.8s ease-in-out infinite;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .wk-scroll-hint::before {
+            content: '';
+            width: 18px;
+            height: 1px;
+            background: currentColor;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        @keyframes wkBob {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50%       { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* ------------------------------------------------
+           SIDEBAR DROITE
+           ------------------------------------------------ */
+        .wk-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 0 3rem;
+            gap: 1.8rem;
+        }
+
+        /* Toggle Slider / Liste */
+        .wk-toggle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .25rem;
+        }
+
+        .wk-tbtn {
+            background: none;
+            font-family: 'DM Mono', monospace;
+            font-size: 8.5px;
+            letter-spacing: .14em;
+            color: rgba(232,237,240,.22);
+            text-transform: uppercase;
+            transition: color .22s;
+            padding: .15rem 0;
+        }
+
+        .wk-tbtn.active,
+        .wk-tbtn:hover {
+            color: #e8edf0;
+        }
+
+        .wk-tsep {
+            width: 14px;
+            height: 1px;
+            background: rgba(232,237,240,.1);
+            border-radius: 1px;
+        }
+
+        /* Barres de progression */
+        .wk-prog {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .wk-prog-bar {
+            width: 2px;
+            height: 16px;
+            border-radius: 2px;
+            background: rgba(232,237,240,.12);
+            transition: background .4s cubic-bezier(.16,1,.3,1), height .4s cubic-bezier(.16,1,.3,1);
+            cursor: pointer;
+        }
+
+        .wk-prog-bar.active {
+            background: #e8edf0;
+            height: 28px;
+        }
+
+        .wk-prog-bar:hover:not(.active) {
+            background: rgba(232,237,240,.38);
+        }
+
+        /* ================================================
+           VUE LISTE
+           ================================================ */
+        .wk-list {
+            display: none;
+            position: fixed;
+            inset: 0;
+            top: 64px;
+            background: #080808;
+            overflow-y: auto;
+            z-index: 2;
+        }
+
+        .wk-list.active {
+            display: block;
+        }
+
+        .wk-list-top {
+            padding: 2.5rem 3.5rem 1.5rem;
+            border-bottom: 1px solid rgba(232,237,240,.07);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wk-list-heading {
+            font-size: clamp(20px, 3.5vw, 40px);
+            font-weight: 800;
+            color: #e8edf0;
+            letter-spacing: -.03em;
+        }
+
+        .wk-list-heading .wk-muted {
+            color: rgba(232,237,240,.2);
+        }
+
+        .wk-list-count {
+            font-family: 'DM Mono', monospace;
+            font-size: 9px;
+            color: rgba(232,237,240,.25);
+            letter-spacing: .14em;
+        }
+
+        /* Chaque ligne */
+        .wk-list-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.3rem 3.5rem;
+            border-bottom: 1px solid rgba(232,237,240,.06);
+            cursor: pointer;
+            transition: padding-left .28s cubic-bezier(.16,1,.3,1), background .2s;
+        }
+
+        .wk-list-item:hover {
+            padding-left: 4.5rem;
+            background: rgba(232,237,240,.025);
+        }
+
+        .wk-list-num {
+            font-family: 'DM Mono', monospace;
+            font-size: 9px;
+            color: rgba(232,237,240,.22);
+            letter-spacing: .1em;
+            min-width: 28px;
+            flex-shrink: 0;
+        }
+
+        .wk-list-txt {
+            flex: 1;
+        }
+
+        .wk-list-title {
+            font-size: clamp(16px, 2.5vw, 28px);
+            font-weight: 700;
+            letter-spacing: -.025em;
+            color: #e8edf0;
+            line-height: 1.1;
+        }
+
+        .wk-list-sub {
+            font-family: 'DM Mono', monospace;
+            font-size: 8.5px;
+            color: rgba(232,237,240,.28);
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-top: .25rem;
+        }
+
+        .wk-list-cat-badge { display: none; }
+
+        .wk-list-arrow {
+            font-size: 16px;
+            color: rgba(232,237,240,.25);
+            flex-shrink: 0;
+            transition: transform .22s, color .22s;
+        }
+
+        .wk-list-item:hover .wk-list-arrow {
+            transform: translate(4px, -4px);
+            color: #e8edf0;
+        }
+
+        /* Footer dans la vue liste */
+        .wk-list-footer {
+            background: #080808;
+            padding: 1.5rem 3.5rem;
+            display: flex;
+            align-items: center;
+            gap: .7rem;
+            flex-wrap: wrap;
+            border-top: 1px solid rgba(232,237,240,.06);
+            margin-top: 2rem;
+        }
+
+        /* ================================================
+           RESPONSIVE
+           ================================================ */
+        @media (max-width: 860px) {
+            .wk-wrap { grid-template-columns: 52px 1fr 52px; top: 56px; }
+            .wk-list  { top: 56px; }
+            .wk-cur-num { font-size: 20px; }
+            .wk-vert { display: none; }
+            .wk-scroll-hint { display: none; }
+            .wk-media { width: 94%; }
+            .wk-info  { width: 94%; }
+        }
+
+        @media (max-width: 600px) {
+            .wk-wrap { grid-template-columns: 40px 1fr 40px; }
+            .wk-left,
+            .wk-right { padding: 1.5rem 0 2rem; }
+            .wk-list-item { padding: 1.1rem 1.5rem; }
+            .wk-list-item:hover { padding-left: 2.2rem; }
+            .wk-list-top,
+            .wk-list-footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+            .wk-list-cat-badge { display: none; }
+        }
+    </style>
+</head>
+
+<body class="wk-page">
+    <div id="page-transition"></div>
+
+    <!-- MENU FLOTTANT -->
+    <div id="menu-overlay">
+        <ul class="menu-float-list">
+            <li><a href="../index.html" class="menu-float-link" data-page data-fr="Accueil" data-en="Home">Accueil</a></li>
+            <li><a href="studio.html"   class="menu-float-link" data-page data-fr="&Agrave; propos" data-en="About">&Agrave; propos</a></li>
+            <li><a href="work.html"     class="menu-float-link" data-page data-fr="Projets" data-en="Projects">Projets</a></li>
+            <li><a href="contact.html"  class="menu-float-link" data-page>Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- NAV -->
+    <nav id="nav">
+        <a href="../index.html" class="nav-logo" data-page>Luego Pereira</a>
+        <div class="nav-right">
+            <a href="contact.html" class="nav-pill nav-pill-ghost" data-page
+               data-fr="Me contacter &#8599;" data-en="Contact me &#8599;">Me contacter &#8599;</a>
+            <button class="nav-control" id="lang-toggle">EN</button>
+            <button class="nav-control" id="theme-toggle" data-dark="0">&#9790;</button>
+            <button class="nav-control" id="sound-toggle" data-on="1">&#9834;</button>
+            <button class="nav-pill nav-pill-dark js-menu-open">MENU <span class="nav-pill-dots">&#8943;</span></button>
+        </div>
+    </nav>
+
+    <!-- ================================================
+         CAROUSEL PRINCIPAL
+         ================================================ -->
+    <div class="wk-wrap" id="wk-wrap">
+
+        <!-- SIDEBAR GAUCHE -->
+        <aside class="wk-left">
+            <div class="wk-counter">
+                <span class="wk-cur-num" id="wk-cur">01</span>
+                <span class="wk-total-str" id="wk-total">/ 09</span>
+            </div>
+            <div class="wk-vert" data-fr="SÉLECTION — DÉFILEMENT" data-en="SELECTION — SCROLL">SÉLECTION — DÉFILEMENT</div>
+        </aside>
+
+        <!-- STAGE -->
+        <div class="wk-stage" id="wk-stage">
+            <div class="wk-slides-wrap" id="wk-slides-wrap">
+                <!-- Slides générés par JS -->
+            </div>
+            <div class="wk-scroll-hint" data-fr="DÉFILER" data-en="SCROLL">DÉFILER</div>
+        </div>
+
+        <!-- SIDEBAR DROITE -->
+        <aside class="wk-right">
+            <div class="wk-toggle">
+                <button class="wk-tbtn active" id="wk-btn-slider" data-fr="SLIDER" data-en="SLIDER">SLIDER</button>
+                <div class="wk-tsep"></div>
+                <button class="wk-tbtn" id="wk-btn-list" data-fr="LISTE" data-en="LIST">LISTE</button>
+            </div>
+            <div class="wk-prog" id="wk-prog">
+                <!-- Barres générées par JS -->
+            </div>
+        </aside>
+    </div>
+
+    <!-- ================================================
+         VUE LISTE
+         ================================================ -->
+    <div class="wk-list" id="wk-list">
+        <div class="wk-list-top">
+            <h1 class="wk-list-heading">
+                <span data-fr="Tous les" data-en="All">Tous les</span>
+                <span class="wk-muted" data-fr=" projets." data-en=" projects."> projets.</span>
+            </h1>
+            <span class="wk-list-count" id="wk-list-count">08 projets</span>
+        </div>
+        <!-- Items générés par JS -->
+        <!-- Footer ajouté par JS -->
+    </div>
+
+    <!-- GSAP en premier pour que le carousel l'utilise -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="../scripts/script.js"></script>
+
+    <script>
+    /* ================================================
+       CAROUSEL — script dédié à la page Work
+       ================================================ */
+    (function () {
+
+        /* ----- DONNÉES PROJETS ----- */
+        var PROJECTS = [
+            {
+                titleFr: 'DESIGN\nGRAPHIQUE',
+                titleEn: 'GRAPHIC\nDESIGN',
+                client:  'BAC PRO AMACV',
+                tagsFr:  'DESIGN · ILLUSTRATION · TYPOGRAPHIE',
+                tagsEn:  'DESIGN · ILLUSTRATION · TYPOGRAPHY',
+                year:    '2021–2024',
+                href:    'proj-malte.html',
+                bg:      "url('../assets/concours-carte-voeux-2022.png')",
+                bgColor: '#f0ece3',
+                bgSize:  'cover',
+                cat:     'DESIGN'
+            },
+            {
+                titleFr: 'LOGO\nSSF',
+                titleEn: 'SSF\nLOGO',
+                client:  'SAINT-SÉBASTIEN-DE-MORSENT',
+                tagsFr:  'DESIGN · LOGO · VECTORIEL',
+                tagsEn:  'DESIGN · LOGO · VECTOR',
+                year:    '2023',
+                href:    'proj-logo-ssf.html',
+                bg:      "url('../assets/logo-club-football-ssf.png')",
+                bgColor: '#060e06',
+                bgSize:  'contain',
+                cat:     'DESIGN'
+            },
+            {
+                titleFr: 'LOGO\nPERSONNEL',
+                titleEn: 'PERSONAL\nLOGO',
+                client:  'LUEGO PEREIRA',
+                tagsFr:  'DESIGN · LOGO · IDENTITÉ',
+                tagsEn:  'DESIGN · LOGO · IDENTITY',
+                year:    '2022',
+                href:    'proj-logo-personnel.html',
+                bg:      "url('../assets/logo-personnel.jpg')",
+                bgColor: '#f8f8f8',
+                bgSize:  'contain',
+                cat:     'DESIGN'
+            },
+            {
+                titleFr: 'VIDÉO\nPROMO',
+                titleEn: 'PROMO\nVIDEO',
+                client:  'CÉGEP DE MATANE',
+                tagsFr:  'VIDÉO · MONTAGE · PROMOTION',
+                tagsEn:  'VIDEO · EDITING · PROMOTION',
+                year:    '2025',
+                href:    'proj-tp1.html',
+                video:   '../assets/tp1-promo-cegep-final.mp4',
+                bgGrad:  'linear-gradient(135deg,#0a0014,#1a0a2e)',
+                cat:     'VIDÉO'
+            },
+            {
+                titleFr: 'FILM\nAMA CV',
+                titleEn: 'AMA CV\nFILM',
+                client:  'BAC PRO AMACV',
+                tagsFr:  'VIDÉO · NARRATION · RÉALISATION',
+                tagsEn:  'VIDEO · STORYTELLING · DIRECTION',
+                year:    '2023',
+                href:    'proj-amacv.html',
+                video:   '../assets/film-amacv.mp4',
+                bgGrad:  'linear-gradient(135deg,#00101a,#0a1f2e)',
+                cat:     'VIDÉO'
+            },
+            {
+                titleFr: 'MONTAGES\nRÉSEAUX',
+                titleEn: 'SOCIAL\nEDITS',
+                client:  'LE COMPTOIR DES LOISIRS',
+                tagsFr:  'VIDÉO · RÉSEAUX SOCIAUX · RÉELS',
+                tagsEn:  'VIDEO · SOCIAL MEDIA · REELS',
+                year:    '2022',
+                href:    'proj-montages.html',
+                video:   '../assets/video-reseaux-sociaux-1.mp4',
+                bgGrad:  'linear-gradient(135deg,#0d0019,#1a0030)',
+                cat:     'VIDÉO'
+            },
+            {
+                titleFr: 'OUTER\nBANKS',
+                titleEn: 'OUTER\nBANKS',
+                client:  'CÉGEP DE MATANE — TIM',
+                tagsFr:  'ANIMATION · AFTER EFFECTS · PARALLAXE',
+                tagsEn:  'ANIMATION · AFTER EFFECTS · PARALLAX',
+                year:    '2025',
+                href:    'proj-tp2.html',
+                video:   '../assets/tp2-outer-banks.mp4',
+                bgGrad:  'linear-gradient(135deg,#001a0d,#002a18)',
+                cat:     'ANIMATION'
+            },
+            {
+                titleFr: 'BANNIÈRE\nSUPREME',
+                titleEn: 'SUPREME\nBANNER',
+                client:  'BAC PRO AMACV',
+                tagsFr:  'ANIMATION · AFTER EFFECTS · MOTION DESIGN',
+                tagsEn:  'ANIMATION · AFTER EFFECTS · MOTION DESIGN',
+                year:    '2023',
+                href:    'proj-animation-supreme.html',
+                video:   '../assets/animation-supreme.mp4',
+                bgGrad:  'linear-gradient(135deg,#1a0000,#2a0a0a)',
+                cat:     'ANIMATION'
+            },
+            {
+                titleFr: 'STORY OF\nBAD BUNNY',
+                titleEn: 'STORY OF\nBAD BUNNY',
+                client:  'CÉGEP DE MATANE — TIM',
+                tagsFr:  'VIDÉO · MONTAGE · NARRATION',
+                tagsEn:  'VIDEO · EDITING · STORYTELLING',
+                year:    '2025',
+                href:    'proj-badbunny.html',
+                video:   '../assets/StoryofBadbunny.mp4',
+                bgGrad:  'linear-gradient(135deg,#0a000a,#1a0020)',
+                cat:     'VIDÉO'
+            }
+        ];
+
+        /* ----- ÉTAT ----- */
+        var current    = 0;
+        var animating  = false;
+        var sliderMode = true;
+        var slides     = [];
+        var progBars   = [];
+
+        /* ----- HELPERS LANGUE ----- */
+        function lang()   { return document.documentElement.getAttribute('data-lang') || 'fr'; }
+        function t(p, key) { return lang() === 'fr' ? p[key + 'Fr'] : p[key + 'En']; }
+
+        /* ----- CONSTRUCTION DES SLIDES ----- */
+        var wrap = document.getElementById('wk-slides-wrap');
+
+        PROJECTS.forEach(function (p, i) {
+            var slide = document.createElement('div');
+            slide.className = 'wk-slide';
+            slide.setAttribute('data-i', i);
+
+            /* Cadre média */
+            var media = document.createElement('div');
+            media.className = 'wk-media';
+
+            if (p.video) {
+                /* Vidéo autoplay en carrousel */
+                var vid = document.createElement('video');
+                vid.className = 'wk-vid';
+                vid.muted    = true;
+                vid.loop     = true;
+                vid.preload  = 'auto';
+                vid.setAttribute('playsinline', '');
+                var src = document.createElement('source');
+                src.src  = p.video;
+                src.type = 'video/mp4';
+                vid.appendChild(src);
+                media.appendChild(vid);
+                slide._video = vid;
+            } else {
+                var inner = document.createElement('div');
+                inner.className = 'wk-media-inner';
+                if (p.bg) {
+                    inner.style.backgroundImage  = p.bg;
+                    inner.style.backgroundSize   = p.bgSize  || 'cover';
+                    inner.style.backgroundColor  = p.bgColor || '#141414';
+                } else {
+                    inner.style.background = p.bgGrad;
+                }
+                media.appendChild(inner);
+            }
+
+            /* Overlay "voir le projet" */
+            var ov = document.createElement('div');
+            ov.className = 'wk-media-overlay';
+            var lbl = document.createElement('span');
+            lbl.className = 'wk-media-label';
+            lbl.setAttribute('data-fr', 'VOIR LE PROJET ↗');
+            lbl.setAttribute('data-en', 'VIEW PROJECT ↗');
+            lbl.textContent = lang() === 'fr' ? 'VOIR LE PROJET ↗' : 'VIEW PROJECT ↗';
+            ov.appendChild(lbl);
+            media.appendChild(ov);
+
+            /* Clic → navigation vers la page projet */
+            media.addEventListener('click', (function(projIdx, projHref) { return function () {
+                try { sessionStorage.setItem('wk-last', projIdx); } catch(e){}
+                var tr = document.getElementById('page-transition');
+                if (tr) tr.classList.add('entering');
+                if (typeof sndNav === 'function') sndNav();
+                setTimeout(function () { window.location.href = projHref; }, 460);
+            }; })(i, p.href));
+            /* Son au survol */
+            media.addEventListener('mouseenter', function () {
+                if (typeof sndHover === 'function') sndHover();
+            });
+
+            /* Bloc info */
+            var info = document.createElement('div');
+            info.className = 'wk-info';
+
+            var client = document.createElement('div');
+            client.className = 'wk-client';
+            client.textContent = p.client;
+
+            /* Titre — lettres séparées pour animation magnétique */
+            var titleEl = document.createElement('h2');
+            titleEl.className = 'wk-title';
+            titleEl.setAttribute('data-fr-title', p.titleFr);
+            titleEl.setAttribute('data-en-title', p.titleEn);
+            buildLetters(titleEl, t(p, 'title'));
+
+            var meta = document.createElement('div');
+            meta.className = 'wk-meta';
+
+            var tags = document.createElement('span');
+            tags.className = 'wk-tags';
+            tags.setAttribute('data-fr', p.tagsFr);
+            tags.setAttribute('data-en', p.tagsEn);
+            tags.textContent = t(p, 'tags');
+
+            var year = document.createElement('span');
+            year.className = 'wk-year';
+            year.textContent = p.year;
+
+            meta.appendChild(tags);
+            meta.appendChild(year);
+            info.appendChild(client);
+            info.appendChild(titleEl);
+            info.appendChild(meta);
+
+            slide.appendChild(media);
+            slide.appendChild(info);
+            wrap.appendChild(slide);
+            slides.push(slide);
+
+            /* Effet magnétique sur les lettres */
+            initMagnet(titleEl);
+        });
+
+        /* ----- CONSTRUCTION DES BARRES DE PROGRESSION ----- */
+        var progWrap = document.getElementById('wk-prog');
+        PROJECTS.forEach(function (p, i) {
+            var bar = document.createElement('div');
+            bar.className = 'wk-prog-bar';
+            bar.title = t(p, 'title').replace('\n', ' ');
+            bar.addEventListener('click', function () { goTo(i); });
+            progWrap.appendChild(bar);
+            progBars.push(bar);
+        });
+
+        /* ----- CONSTRUCTION DE LA VUE LISTE ----- */
+        var listEl = document.getElementById('wk-list');
+        PROJECTS.forEach(function (p, i) {
+            var item = document.createElement('div');
+            item.className = 'wk-list-item';
+
+            var num = document.createElement('span');
+            num.className = 'wk-list-num';
+            num.textContent = (i + 1 < 10 ? '0' : '') + (i + 1);
+
+            var txt = document.createElement('div');
+            txt.className = 'wk-list-txt';
+
+            var ti = document.createElement('div');
+            ti.className = 'wk-list-title';
+            ti.setAttribute('data-fr', p.titleFr.replace('\n', ' '));
+            ti.setAttribute('data-en', p.titleEn.replace('\n', ' '));
+            ti.textContent = t(p, 'title').replace('\n', ' ');
+
+            var sub = document.createElement('div');
+            sub.className = 'wk-list-sub';
+            sub.textContent = p.client + ' · ' + p.year;
+
+            txt.appendChild(ti);
+            txt.appendChild(sub);
+
+            var cat = document.createElement('span');
+            cat.className = 'wk-list-cat-badge';
+            cat.textContent = p.cat;
+
+            var arr = document.createElement('span');
+            arr.className = 'wk-list-arrow';
+            arr.textContent = '↗';
+
+            item.appendChild(num);
+            item.appendChild(txt);
+            item.appendChild(cat);
+            item.appendChild(arr);
+            listEl.appendChild(item);
+
+            /* Navigation */
+            item.addEventListener('click', function () {
+                var tr = document.getElementById('page-transition');
+                if (tr) tr.classList.add('entering');
+                if (typeof sndNav === 'function') sndNav();
+                setTimeout(function () { window.location.href = p.href; }, 460);
+            });
+            item.addEventListener('mouseenter', function () {
+                if (typeof sndHover === 'function') sndHover();
+            });
+        });
+
+        /* Footer dans la vue liste */
+        var lf = document.createElement('div');
+        lf.className = 'wk-list-footer';
+        lf.innerHTML = [
+            '<a href="../index.html" class="footer-pill" data-page',
+            ' data-fr="HOME &#8599;" data-en="HOME &#8599;">HOME &#8599;</a>',
+            '<a href="studio.html" class="footer-pill" data-page',
+            ' data-fr="&Agrave; PROPOS &#8599;" data-en="ABOUT &#8599;">&Agrave; PROPOS &#8599;</a>',
+            '<a href="contact.html" class="footer-pill" data-page',
+            ' data-fr="CONTACT &#8599;" data-en="CONTACT &#8599;">CONTACT &#8599;</a>',
+            '<button class="footer-pill footer-up"',
+            ' onclick="document.getElementById(\'wk-list\').scrollTop=0">GO UP &#8593;</button>'
+        ].join('');
+        listEl.appendChild(lf);
+
+        /* Brancher les liens du footer sur la transition de page */
+        lf.querySelectorAll('a[data-page]').forEach(function (a) {
+            a.addEventListener('mouseenter', function () { if (typeof sndHover === 'function') sndHover(); });
+            a.addEventListener('click', function (e) {
+                e.preventDefault();
+                var href = a.getAttribute('href');
+                if (typeof sndNav === 'function') sndNav();
+                var tr = document.getElementById('page-transition');
+                if (tr) tr.classList.add('entering');
+                setTimeout(function () { window.location.href = href; }, 460);
+            });
+        });
+
+        /* ----- INIT — toujours démarrer au projet N°01 ----- */
+        try { sessionStorage.removeItem('wk-last'); } catch(e) {}
+
+        updateUI();
+        gsap.set(slides[current], { opacity: 1 });
+        slides[current].classList.add('wk-active');
+        enterSlide(slides[current], 0);
+        /* Lancer la vidéo du slide initial si présente */
+        if (slides[current]._video) {
+            slides[current]._video.play().catch(function(){});
+        }
+
+        /* ================================================
+           FONCTION goTo — transition principale
+           ================================================ */
+        function goTo(idx) {
+            if (animating || idx === current || idx < 0 || idx >= PROJECTS.length) return;
+            animating = true;
+
+            /* Pause la vidéo sortante */
+            if (slides[current]._video) {
+                slides[current]._video.pause();
+            }
+
+            var fromSlide = slides[current];
+            var toSlide   = slides[idx];
+            var dir       = idx > current ? 1 : -1;
+
+            /* Sortie de la slide courante */
+            gsap.to(fromSlide, {
+                opacity: 0,
+                y: dir * -55,
+                duration: .42,
+                ease: 'power2.in',
+                onComplete: function () {
+                    fromSlide.classList.remove('wk-active');
+                    gsap.set(fromSlide, { y: 0 });
+                }
+            });
+
+            /* Entrée de la nouvelle slide */
+            gsap.fromTo(toSlide,
+                { opacity: 0, y: dir * 65 },
+                {
+                    opacity: 1, y: 0,
+                    duration: .65,
+                    delay: .18,
+                    ease: 'power3.out',
+                    onStart: function () { toSlide.classList.add('wk-active'); },
+                    onComplete: function () { animating = false; }
+                }
+            );
+
+            enterSlide(toSlide, .28);
+
+            /* Lecture de la vidéo entrante */
+            if (toSlide._video) {
+                toSlide._video.play().catch(function(){});
+            }
+            /* Mémoriser le projet courant pour le retour */
+            try { sessionStorage.setItem('wk-last', idx); } catch(e){}
+
+            current = idx;
+            updateUI();
+        }
+
+        /* ----- Anime le contenu d'une slide qui entre ----- */
+        function enterSlide(slide, delay) {
+            delay = delay || 0;
+            var letters = slide.querySelectorAll('.wk-letter');
+            var client  = slide.querySelector('.wk-client');
+            var meta    = slide.querySelector('.wk-meta');
+            var mediaIn = slide.querySelector('.wk-media-inner');
+
+            /* Image : léger scale-in */
+            gsap.fromTo(mediaIn,
+                { scale: .94 },
+                { scale: 1, duration: .7, delay: delay, ease: 'power3.out' }
+            );
+
+            /* Lettres — stagger en vague */
+            gsap.fromTo(letters,
+                { y: 38, opacity: 0 },
+                {
+                    y: 0, opacity: 1,
+                    duration: .58,
+                    stagger: { amount: .28, from: 'start' },
+                    delay: delay + .06,
+                    ease: 'power3.out'
+                }
+            );
+
+            /* Client + meta */
+            gsap.fromTo([client, meta],
+                { opacity: 0, y: 18 },
+                { opacity: 1, y: 0, duration: .5, stagger: .08, delay: delay + .28, ease: 'power2.out' }
+            );
+        }
+
+        /* ----- Mise à jour du compteur et des barres ----- */
+        function updateUI() {
+            var curEl = document.getElementById('wk-cur');
+            if (curEl) curEl.textContent = (current + 1 < 10 ? '0' : '') + (current + 1);
+            progBars.forEach(function (b, i) { b.classList.toggle('active', i === current); });
+        }
+
+        /* ================================================
+           SPLIT EN LETTRES
+           ================================================ */
+        function buildLetters(el, text) {
+            el.innerHTML = '';
+            var lines = text.split('\n');
+            lines.forEach(function (line, li) {
+                if (li > 0) {
+                    var br = document.createElement('span');
+                    br.className = 'wk-letter-br';
+                    el.appendChild(br);
+                }
+                for (var ci = 0; ci < line.length; ci++) {
+                    var ch = line[ci];
+                    var s = document.createElement('span');
+                    if (ch === ' ') {
+                        s.style.display = 'inline-block';
+                        s.style.width = '.28em';
+                    } else {
+                        s.className = 'wk-letter';
+                        s.textContent = ch;
+                    }
+                    el.appendChild(s);
+                }
+            });
+        }
+
+        /* ================================================
+           EFFET MAGNÉTIQUE SUR LES LETTRES
+           Les lettres fuient le curseur (répulsion douce)
+           ================================================ */
+        function initMagnet(titleEl) {
+            var RAF = null;
+
+            titleEl.addEventListener('mousemove', function (e) {
+                if (RAF) cancelAnimationFrame(RAF);
+                RAF = requestAnimationFrame(function () {
+                    var letters = titleEl.querySelectorAll('.wk-letter');
+                    letters.forEach(function (letter) {
+                        var r    = letter.getBoundingClientRect();
+                        var cx   = r.left + r.width  * .5;
+                        var cy   = r.top  + r.height * .5;
+                        var dx   = e.clientX - cx;
+                        var dy   = e.clientY - cy;
+                        var dist = Math.sqrt(dx * dx + dy * dy);
+                        var max  = 90;
+
+                        if (dist < max) {
+                            var f = (1 - dist / max) * .9;
+                            gsap.to(letter, {
+                                x: -dx * f * .28,
+                                y: -dy * f * .28,
+                                duration: .22,
+                                ease: 'power2.out',
+                                overwrite: 'auto'
+                            });
+                        } else {
+                            gsap.to(letter, {
+                                x: 0, y: 0,
+                                duration: .55,
+                                ease: 'elastic.out(1,.45)',
+                                overwrite: 'auto'
+                            });
+                        }
+                    });
+                });
+            });
+
+            titleEl.addEventListener('mouseleave', function () {
+                if (RAF) cancelAnimationFrame(RAF);
+                var letters = titleEl.querySelectorAll('.wk-letter');
+                gsap.to(letters, {
+                    x: 0, y: 0,
+                    duration: .9,
+                    ease: 'elastic.out(1,.4)',
+                    stagger: { amount: .18, from: 'center' },
+                    overwrite: 'auto'
+                });
+            });
+        }
+
+        /* ================================================
+           ÉVÉNEMENTS DE NAVIGATION
+           ================================================ */
+
+        /* Molette — avec cooldown pour éviter les sauts multiples */
+        var wheelCooldown = false;
+        window.addEventListener('wheel', function (e) {
+            if (!sliderMode || animating || wheelCooldown) return;
+            wheelCooldown = true;
+            resetAuto();
+            setTimeout(function () { wheelCooldown = false; }, 750);
+            if (e.deltaY > 0) { if (current < PROJECTS.length - 1) goTo(current + 1); }
+            else              { if (current > 0)                   goTo(current - 1); }
+        }, { passive: true });
+
+        /* Clavier */
+        document.addEventListener('keydown', function (e) {
+            if (!sliderMode) return;
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                resetAuto();
+                if (current < PROJECTS.length - 1) goTo(current + 1);
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                resetAuto();
+                if (current > 0) goTo(current - 1);
+            }
+        });
+
+        /* Touch / swipe */
+        var t0 = 0;
+        window.addEventListener('touchstart', function (e) { if (sliderMode) t0 = e.touches[0].clientY; }, { passive: true });
+        window.addEventListener('touchend',   function (e) {
+            if (!sliderMode) return;
+            var dy = t0 - e.changedTouches[0].clientY;
+            if (Math.abs(dy) < 48) return;
+            if (dy > 0 && current < PROJECTS.length - 1) goTo(current + 1);
+            if (dy < 0 && current > 0)                   goTo(current - 1);
+            resetAuto();
+        }, { passive: true });
+
+        /* ================================================
+           AUTOPLAY — avance automatiquement toutes les 5s
+           Se réinitialise dès qu'on interagit manuellement
+           ================================================ */
+        var autoTimer = null;
+
+        function startAuto() {
+            if (autoTimer) clearInterval(autoTimer);
+            autoTimer = setInterval(function () {
+                if (!sliderMode || animating) return;
+                goTo((current + 1) % PROJECTS.length);
+            }, 5000);
+        }
+
+        function resetAuto() { startAuto(); }
+
+        startAuto();
+
+        /* Réinitialise le timer sur chaque interaction manuelle */
+        window.addEventListener('wheel', function () {
+            if (sliderMode) resetAuto();
+        }, { passive: true });
+
+        document.addEventListener('keydown', function (e) {
+            if (sliderMode && (e.key === 'ArrowDown' || e.key === 'ArrowUp' ||
+                               e.key === 'ArrowRight' || e.key === 'ArrowLeft')) {
+                resetAuto();
+            }
+        });
+
+        /* Pause l'autoplay quand la fenêtre est en arrière-plan */
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) { if (autoTimer) clearInterval(autoTimer); }
+            else startAuto();
+        });
+
+        /* ================================================
+           TOGGLE SLIDER / LISTE
+           ================================================ */
+        document.getElementById('wk-btn-slider').addEventListener('click', function () {
+            if (sliderMode) return;
+            sliderMode = true;
+            document.body.classList.remove('wk-list-mode');
+            document.body.style.overflow = 'hidden';
+            document.getElementById('wk-wrap').style.display = '';
+            document.getElementById('wk-list').classList.remove('active');
+            document.getElementById('wk-btn-slider').classList.add('active');
+            document.getElementById('wk-btn-list').classList.remove('active');
+            if (typeof sndClick === 'function') sndClick();
+        });
+
+        document.getElementById('wk-btn-list').addEventListener('click', function () {
+            if (!sliderMode) return;
+            sliderMode = false;
+            document.body.classList.add('wk-list-mode');
+            document.body.style.overflow = '';
+            document.getElementById('wk-wrap').style.display = 'none';
+            document.getElementById('wk-list').classList.add('active');
+            document.getElementById('wk-btn-slider').classList.remove('active');
+            document.getElementById('wk-btn-list').classList.add('active');
+            if (typeof sndClick === 'function') sndClick();
+        });
+
+        /* ================================================
+           MISE À JOUR LANGUE — reconstruit les titres lettre par lettre
+           quand l'utilisateur change de langue
+           ================================================ */
+        var langObserver = new MutationObserver(function () {
+            PROJECTS.forEach(function (p, i) {
+                var slide   = slides[i];
+                var titleEl = slide.querySelector('.wk-title');
+                if (!titleEl) return;
+                buildLetters(titleEl, t(p, 'title'));
+                /* Réinitialiser l'effet magnétique sur le nouveau DOM */
+                initMagnet(titleEl);
+                /* Si ce slide est actif, réanimer les lettres */
+                if (i === current) {
+                    var letters = titleEl.querySelectorAll('.wk-letter');
+                    gsap.fromTo(letters,
+                        { y: 20, opacity: 0 },
+                        { y: 0, opacity: 1, duration: .45, stagger: { amount: .2 }, ease: 'power3.out' }
+                    );
+                }
+            });
+            /* Mettre à jour le compteur de la liste */
+            var lcount = document.getElementById('wk-list-count');
+            if (lcount) lcount.textContent = PROJECTS.length + (lang() === 'fr' ? ' projets' : ' projects');
+        });
+        langObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-lang'] });
+
+        /* ----- Overflow initial ----- */
+        document.body.style.overflow = 'hidden';
+
+    })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light" data-lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luego Pereira &mdash; Vid&eacute;aste &amp; Multim&eacute;dia</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d0d0d'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='800' font-size='13' fill='%23f0ece3'>LP</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@300;400&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <style>
+        .stack-1 {
+            background: #111315;
+            color: #e8edf0;
+            z-index: 10;
+        }
+
+        .stack-2 {
+            background: #1c1f22;
+            color: #e8edf0;
+            z-index: 11;
+        }
+
+        .stack-3 {
+            background: #242829;
+            color: #e8edf0;
+            z-index: 12;
+        }
+
+        .stack-4 {
+            background: #2d3236;
+            color: #e8edf0;
+            z-index: 13;
+        }
+
+        /* KOTO — section projets 2 colonnes */
+        .koto-section {
+            display: grid;
+            grid-template-columns: 36% 64%;
+            min-height: calc(100vh * 4);
+            background: #0d0d0d;
+            border-top: 1px solid rgba(255, 255, 255, .07);
+        }
+
+        .koto-left {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 4rem 3rem;
+            border-right: 1px solid rgba(255, 255, 255, .07);
+        }
+
+        .koto-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: rgba(232, 237, 240, .35);
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            font-family: 'DM Mono', monospace;
+        }
+
+        .koto-proj-name {
+            font-size: clamp(26px, 4vw, 50px);
+            font-weight: 800;
+            letter-spacing: -.03em;
+            line-height: 1.05;
+            color: #e8edf0;
+            transition: opacity .35s ease;
+        }
+
+        .koto-proj-desc {
+            font-size: 14px;
+            line-height: 1.88;
+            color: rgba(232, 237, 240, .5);
+            max-width: 290px;
+            margin-top: 1.5rem;
+            transition: opacity .35s ease;
+        }
+
+        .koto-proj-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            color: rgba(232, 237, 240, .3);
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            margin-top: 1rem;
+            transition: opacity .35s ease;
+        }
+
+        .koto-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(232, 237, 240, .6);
+            border-bottom: 1px solid rgba(232, 237, 240, .2);
+            padding-bottom: 3px;
+            margin-top: 2.5rem;
+            text-decoration: none;
+            transition: color .2s, border-color .2s;
+        }
+
+        .koto-cta:hover {
+            color: #e8edf0;
+            border-color: rgba(232, 237, 240, .5);
+        }
+
+        .koto-dots {
+            display: flex;
+            gap: .5rem;
+            margin-top: 2rem;
+        }
+
+        .koto-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(232, 237, 240, .2);
+            transition: background .3s, transform .3s;
+            cursor: none;
+        }
+
+        .koto-dot.active {
+            background: #e8edf0;
+            transform: scale(1.35);
+        }
+
+        .koto-right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .koto-slide {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .koto-slide-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform .7s ease;
+        }
+
+        .koto-slide:hover .koto-slide-img {
+            transform: scale(1.04);
+        }
+
+        @media(max-width:768px) {
+            .koto-section {
+                grid-template-columns: 1fr;
+            }
+
+            .koto-left {
+                position: relative;
+                height: auto;
+                padding: 3rem 1.5rem 2rem;
+            }
+
+            .koto-slide {
+                height: 65vw;
+                min-height: 260px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loader">
+        <div class="loader-logo">LP</div>
+        <div class="loader-bar-track">
+            <div class="loader-bar-fill"></div>
+        </div>
+        <div class="loader-pct">0%</div>
+    </div>
+
+    <div id="page-transition"></div>
+
+    </div>
+
+    <!-- MENU FLOTTANT -->
+    <div id="menu-overlay">
+        <ul class="menu-float-list">
+            <li><a href="index.html" class="menu-float-link" data-page data-fr="Accueil" data-en="Home">Accueil</a></li>
+            <li><a href="pages/studio.html" class="menu-float-link" data-page data-fr="&Agrave; propos"
+                    data-en="About">&Agrave; propos</a></li>
+            <li><a href="pages/work.html" class="menu-float-link" data-page data-fr="Projets" data-en="Projects">Projets</a>
+            </li>
+            <li><a href="pages/contact.html" class="menu-float-link" data-page>Contact</a></li>
+        </ul>
+    </div>
+
+    <nav id="nav">
+        <a href="index.html" class="nav-logo" data-page>Luego Pereira</a>
+        <div class="nav-right">
+            <a href="pages/work.html" class="nav-pill nav-pill-ghost" data-page data-fr="Voir les projets &rarr;"
+                data-en="View projects &rarr;">Voir les projets &rarr;</a>
+            <button class="nav-control" id="lang-toggle">EN</button>
+            <button class="nav-control" id="theme-toggle" data-dark="0">&#9790;</button>
+            <button class="nav-control" id="sound-toggle" data-on="1">&#9834;</button>
+            <button class="nav-pill nav-pill-dark js-menu-open">MENU <span class="nav-pill-dots">&#8943;</span></button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-word" style="padding-top:26vh;">
+            <span class="hero-word-inner scramble">LUEGO</span>
+        </div>
+        <div class="hero-word">
+            <span class="hero-word-inner scramble">PEREIRA</span>
+        </div>
+        <p class="hero-subtitle">
+            <span data-fr="Étudiant en création" data-en="Student in digital">Étudiant en création</span><br>
+            <span class="muted" data-fr="numérique multimédia." data-en="multimedia creation.">numérique multimédia.</span>
+        </p>
+        <span class="hero-scroll">Scroll</span>
+    </section>
+
+    <!-- STACKING -->
+    <div class="stack-wrapper">
+        <div class="stack-section stack-1">
+            <div>
+                <div class="stack-section-label">01 &mdash; Captation</div>
+                <div class="stack-section-title">Captation<br><span class="ghost">Vid&eacute;o</span></div>
+                <div class="stack-section-tags">
+                    <span class="stack-tag">Sports</span>
+                    <span class="stack-tag" data-fr="Spectacles" data-en="Concerts">Spectacles</span>
+                    <span class="stack-tag">Portraits</span>
+                    <span class="stack-tag" data-fr="&Eacute;v&eacute;nementiel"
+                        data-en="Events">&Eacute;v&eacute;nementiel</span>
+                </div>
+                <p class="stack-section-body"
+                    data-fr="Prise de vue dans tous les contextes. Je m&rsquo;adapte et je capture ce qui compte."
+                    data-en="Shooting in all contexts. I adapt and capture what matters.">Prise de vue dans tous les
+                    contextes. Je m&rsquo;adapte et je capture ce qui compte.</p>
+            </div>
+        </div>
+        <div class="stack-section stack-2">
+            <div>
+                <div class="stack-section-label">02 &mdash; Postproduction</div>
+                <div class="stack-section-title">Montage<br><span class="ghost">et &Eacute;dition</span></div>
+                <div class="stack-section-tags">
+                    <span class="stack-tag">CapCut</span><span class="stack-tag">DaVinci</span><span
+                        class="stack-tag">Premiere</span>
+                    <span class="stack-tag" data-fr="&Eacute;talonnage" data-en="Color grading">&Eacute;talonnage</span>
+                </div>
+                <p class="stack-section-body" data-fr="Du rush au rendu final. Chaque coupe est intentionnelle."
+                    data-en="From raw footage to final render. Every cut is intentional.">Du rush au rendu final. Chaque
+                    coupe est intentionnelle.</p>
+            </div>
+        </div>
+        <div class="stack-section stack-3">
+            <div>
+                <div class="stack-section-label">03 &mdash; <span data-fr="Cr&eacute;ation"
+                        data-en="Design">Cr&eacute;ation</span></div>
+                <div class="stack-section-title">Design<br><span class="ghost">Graphique</span></div>
+                <div class="stack-section-tags">
+                    <span class="stack-tag" data-fr="Affiches" data-en="Posters">Affiches</span>
+                    <span class="stack-tag">Logos</span><span class="stack-tag">Flyers</span>
+                </div>
+                <p class="stack-section-body"
+                    data-fr="Communication visuelle compl&egrave;te. Print, digital, r&eacute;seaux sociaux."
+                    data-en="Complete visual communication. Print, digital, social media.">Communication visuelle
+                    compl&egrave;te. Print, digital, r&eacute;seaux sociaux.</p>
+            </div>
+        </div>
+        <div class="stack-section stack-4">
+            <div>
+                <div class="stack-section-label">04 &mdash; <span data-fr="Num&eacute;rique"
+                        data-en="Digital">Num&eacute;rique</span></div>
+                <div class="stack-section-title">Web<br><span class="ghost" data-fr="et Multim&eacute;dia"
+                        data-en="and Multimedia">et Multim&eacute;dia</span></div>
+                <div class="stack-section-tags">
+                    <span class="stack-tag">HTML/CSS</span><span class="stack-tag">JavaScript</span><span
+                        class="stack-tag">UX/UI</span>
+                </div>
+                <p class="stack-section-body"
+                    data-fr="Projets num&eacute;riques complets. De l&rsquo;interface au r&eacute;cit interactif."
+                    data-en="Complete digital projects. From interface to interactive narrative.">Projets
+                    num&eacute;riques complets. De l&rsquo;interface au r&eacute;cit interactif.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION KOTO — 2 colonnes -->
+    <div class="koto-section" id="koto-projects">
+        <div class="koto-left">
+            <div>
+                <div class="koto-label" data-fr="Mes travaux" data-en="My work">Mes travaux</div>
+                <div class="koto-proj-name" id="koto-title">Montages r&eacute;seaux</div>
+            </div>
+            <div>
+                <p class="koto-proj-desc" id="koto-desc">R&eacute;els Instagram cr&eacute;&eacute;s pour Le Comptoir des Loisirs, office de tourisme. Contenus courts, dynamiques et adapt&eacute;s aux formats verticaux.</p>
+                <div class="koto-proj-tag">
+                    <span id="koto-year">2022</span>
+                    <span style="opacity:.4">&middot;</span>
+                    <span id="koto-cat">VID&Eacute;O</span>
+                </div>
+                <a href="pages/work.html" class="koto-cta" data-page data-fr="Voir tous les projets &rarr;"
+                    data-en="View all projects &rarr;">Voir tous les projets &rarr;</a>
+                <div class="koto-dots" id="koto-dots">
+                    <div class="koto-dot active"></div>
+                    <div class="koto-dot"></div>
+                    <div class="koto-dot"></div>
+                    <div class="koto-dot"></div>
+                    <div class="koto-dot"></div>
+                </div>
+            </div>
+        </div>
+        <div class="koto-right" id="koto-slides">
+            <div class="koto-slide" data-idx="0">
+                <video class="koto-slide-img" muted autoplay loop playsinline preload="auto">
+                    <source src="assets/video-reseaux-sociaux-1.mp4" type="video/mp4" />
+                </video>
+            </div>
+            <div class="koto-slide" data-idx="1">
+                <img class="koto-slide-img" src="assets/concours-carte-voeux-2022.png"
+                    alt="Design graphique" loading="lazy" />
+            </div>
+            <div class="koto-slide" data-idx="2">
+                <video class="koto-slide-img" muted loop playsinline preload="auto">
+                    <source src="assets/tp1-promo-cegep-final.mp4" type="video/mp4" />
+                </video>
+            </div>
+            <div class="koto-slide" data-idx="3">
+                <img class="koto-slide-img" src="assets/logo-club-football-ssf.png"
+                    alt="Logo SSF" loading="lazy" style="background:#060e06;object-fit:contain;" />
+            </div>
+            <div class="koto-slide" data-idx="4">
+                <video class="koto-slide-img" muted loop playsinline preload="auto">
+                    <source src="assets/StoryofBadbunny.mp4" type="video/mp4" />
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-band">
+        <div class="stat-cell reveal">
+            <div class="stat-n"><span data-target="3">0</span><span class="stat-plus">+</span></div>
+            <div class="stat-label" data-fr="Stages" data-en="Internships">Stages</div>
+        </div>
+        <div class="stat-cell reveal">
+            <div class="stat-n"><span data-target="6">0</span><span class="stat-plus">+</span></div>
+            <div class="stat-label" data-fr="Projets" data-en="Projects">Projets</div>
+        </div>
+        <div class="stat-cell reveal">
+            <div class="stat-n"><span data-target="2">0</span></div>
+            <div class="stat-label" data-fr="Langues" data-en="Languages">Langues</div>
+        </div>
+        <div class="stat-cell reveal">
+            <div class="stat-n"><span data-target="3">0</span><span class="stat-plus">+</span></div>
+            <div class="stat-label" data-fr="Pays" data-en="Countries">Pays</div>
+        </div>
+    </div>
+
+    <div class="footer-brand">
+        <div class="footer-brand-name">Luego Pereira</div>
+        <div class="footer-brand-sub" data-fr="Vid&eacute;aste &middot; TIM &middot; C&eacute;gep de Matane"
+            data-en="Videographer &middot; TIM &middot; C&eacute;gep de Matane">Vid&eacute;aste &middot; TIM &middot;
+            C&eacute;gep de Matane</div>
+        <div class="footer-socials">
+            <a href="https://instagram.com/luego_pro" target="_blank" class="footer-social-btn">&#128248;</a>
+            <a href="mailto:pereiralue7@gmail.com" class="footer-social-btn">&#9993;</a>
+        </div>
+    </div>
+
+    <footer>
+        <a href="pages/studio.html" class="footer-pill" data-page data-fr="&Agrave; PROPOS &rarr;"
+            data-en="ABOUT &rarr;">&Agrave; PROPOS &rarr;</a>
+        <a href="pages/work.html" class="footer-pill" data-page>WORK &rarr;</a>
+        <a href="pages/contact.html" class="footer-pill" data-page>CONTACT &rarr;</a>
+        <button class="footer-pill footer-up" onclick="window.scrollTo({top:0,behavior:'smooth'})">GO UP &uarr;</button>
+    </footer>
+
+    <script src="scripts/script.js"></script>
+    <script>
+        /* ---- KOTO SCROLL — texte synchronisé aux images ---- */
+        (function () {
+            var slides = document.querySelectorAll('.koto-slide');
+            var dots = document.querySelectorAll('.koto-dot');
+            var titleEl = document.getElementById('koto-title');
+            var descEl = document.getElementById('koto-desc');
+            var yearEl = document.getElementById('koto-year');
+            var catEl = document.getElementById('koto-cat');
+            var current = -1;
+
+            var DATA = [
+                {
+                    fr: {
+                        title: 'Montages r\u00e9seaux', cat: 'VID\u00c9O', year: '2022',
+                        desc: 'R\u00e9els Instagram cr\u00e9\u00e9s pour Le Comptoir des Loisirs, office de tourisme. Contenus courts, dynamiques et adapt\u00e9s aux formats verticaux pour maximiser l\u2019engagement.'
+                    },
+                    en: {
+                        title: 'Social media edits', cat: 'VIDEO', year: '2022',
+                        desc: 'Instagram Reels created for Le Comptoir des Loisirs, a tourism office. Short, dynamic content tailored to vertical formats to maximize engagement.'
+                    }
+                },
+                {
+                    fr: {
+                        title: 'Design graphique', cat: 'DESIGN', year: '2021\u20132024',
+                        desc: 'Conception d\u2019affiches, d\u2019identit\u00e9s visuelles et de supports imprim\u00e9s. Travaux r\u00e9alis\u00e9s en France et lors du stage Erasmus \u00e0 Malte, en autonomie totale.'
+                    },
+                    en: {
+                        title: 'Graphic design', cat: 'DESIGN', year: '2021\u20132024',
+                        desc: 'Poster, visual identity and print design. Work produced in France and during the Erasmus internship in Malta, fully autonomous.'
+                    }
+                },
+                {
+                    fr: {
+                        title: 'Vid\u00e9o promo', cat: 'VID\u00c9O', year: '2025',
+                        desc: 'Vid\u00e9o promotionnelle pour le C\u00e9gep de Matane. Du tournage au rendu final, chaque choix \u2014 musique, rythme, transitions \u2014 pens\u00e9 pour donner envie de s\u2019y inscrire.'
+                    },
+                    en: {
+                        title: 'Promo video', cat: 'VIDEO', year: '2025',
+                        desc: 'Promotional video for C\u00e9gep de Matane. From shooting to final render, every choice \u2014 music, pacing, transitions \u2014 crafted to inspire enrolment.'
+                    }
+                },
+                {
+                    fr: {
+                        title: 'Logo SSF', cat: 'DESIGN', year: '2023',
+                        desc: 'Cr\u00e9ation d\u2019un logo pour le club de football de Saint-S\u00e9bastien-de-Morsent. Identit\u00e9 visuelle forte, vectorielle, con\u00e7ue pour \u00eatre d\u00e9clin\u00e9e sur tous les supports.'
+                    },
+                    en: {
+                        title: 'SSF Logo', cat: 'DESIGN', year: '2023',
+                        desc: 'Logo design for Saint-S\u00e9bastien-de-Morsent football club. Strong vector identity designed to work across all media and formats.'
+                    }
+                },
+                {
+                    fr: {
+                        title: 'Story of Bad Bunny', cat: 'VID\u00c9O', year: '2025',
+                        desc: 'Documentaire narratif retra\u00e7ant le parcours artistique de Bad Bunny. Montage, narration visuelle et recherche pour raconter l\u2019histoire d\u2019un artiste hors-norme.'
+                    },
+                    en: {
+                        title: 'Story of Bad Bunny', cat: 'VIDEO', year: '2025',
+                        desc: 'Narrative documentary tracing Bad Bunny\u2019s artistic journey. Editing, visual storytelling and research to tell the story of an extraordinary artist.'
+                    }
+                }
+            ];
+
+            function getLang() { return document.documentElement.getAttribute('data-lang') || 'fr'; }
+
+            function setProject(idx) {
+                if (idx === current) return;
+                current = idx;
+                var d = DATA[idx][getLang()];
+                titleEl.style.opacity = '0'; descEl.style.opacity = '0';
+                setTimeout(function () {
+                    titleEl.textContent = d.title; descEl.textContent = d.desc;
+                    if (yearEl) yearEl.textContent = d.year;
+                    if (catEl) catEl.textContent = d.cat;
+                    titleEl.style.opacity = '1'; descEl.style.opacity = '1';
+                }, 280);
+                dots.forEach(function (dot, i) { dot.classList.toggle('active', i === idx); });
+            }
+
+            /* Play/pause video slides on visibility */
+            function syncVideos(activeIdx) {
+                slides.forEach(function (s) {
+                    var vid = s.querySelector('video');
+                    if (!vid) return;
+                    var idx = parseInt(s.getAttribute('data-idx'), 10);
+                    if (idx === activeIdx) { vid.play && vid.play(); }
+                    else { vid.pause && vid.pause(); }
+                });
+            }
+
+            var obs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) {
+                        var idx = parseInt(e.target.getAttribute('data-idx'), 10);
+                        setProject(idx);
+                        syncVideos(idx);
+                    }
+                });
+            }, { threshold: 0.5 });
+            slides.forEach(function (s) { obs.observe(s); });
+            setProject(0);
+            syncVideos(0);
+
+            /* Re-sync au changement de langue */
+            document.getElementById('lang-toggle') && document.getElementById('lang-toggle').addEventListener('click', function () {
+                setTimeout(function () { var c = current; current = -1; setProject(c); }, 80);
+            });
+        })();
+    </script>
+</body>
+
+</html>
