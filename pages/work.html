@@ -526,6 +526,77 @@
             .wk-cur-num { font-size: 16px; }
             .wk-total-str { font-size: 7px; }
         }
+
+        /* ================================================
+           MOBILE PREMIUM — 375px iPhone
+           ================================================ */
+        @media (max-width: 480px) {
+            /* Sidebars ultra-fines : juste assez pour counter + toggle */
+            .wk-wrap {
+                grid-template-columns: 32px 1fr 40px;
+                top: 54px;
+            }
+            .wk-list { top: 54px; }
+
+            /* Counter */
+            .wk-left { padding: .75rem 0 1rem; gap: .5rem; }
+            .wk-counter { gap: .1rem; }
+            .wk-cur-num { font-size: 17px; letter-spacing: -.05em; }
+            .wk-total-str { font-size: 6.5px; }
+
+            /* Slide : image occupe presque tout l'écran */
+            .wk-slide { padding: 0 0 3.5rem; }
+            .wk-media {
+                width: 100%;
+                height: min(58vw, calc(100vh - 230px));
+                border-radius: 10px;
+            }
+
+            /* Info sous le cadre */
+            .wk-info { width: 100%; padding: 0 .5rem 0 .35rem; margin-top: .75rem; }
+            .wk-title { font-size: clamp(20px, 8.5vw, 40px); letter-spacing: -.04em; margin-bottom: .5rem; }
+            .wk-client { font-size: 8px; margin-bottom: .35rem; }
+            .wk-tags { font-size: 7.5px; }
+            .wk-year  { font-size: 8px; }
+
+            /* Sidebar droite : toggle + barres compactes */
+            .wk-right { padding: .75rem 0 1rem; gap: 1rem; }
+            .wk-toggle { gap: .2rem; }
+            .wk-tbtn {
+                font-size: 6.5px;
+                padding: .25rem .3rem;
+                letter-spacing: .1em;
+            }
+            .wk-tsep { width: 10px; }
+            .wk-prog { gap: 4px; }
+            .wk-prog-bar { width: 2px; height: 12px; }
+            .wk-prog-bar.active { height: 22px; }
+
+            /* Overlay label trop grand sur mobile → plus petit */
+            .wk-media-label {
+                font-size: 9px;
+                padding: .4rem 1rem;
+            }
+
+            /* Vue liste */
+            .wk-list-top { padding: 1.5rem 1rem 1rem; }
+            .wk-list-heading { font-size: clamp(18px, 5.5vw, 28px); }
+            .wk-list-item { padding: .9rem 1rem; gap: .8rem; }
+            .wk-list-item:hover { padding-left: 1.5rem; }
+            .wk-list-title { font-size: clamp(14px, 4.5vw, 20px); }
+            .wk-list-sub { font-size: 7.5px; }
+            .wk-list-num { font-size: 8px; min-width: 22px; }
+            .wk-list-footer { padding: 1rem 1rem; gap: .4rem; }
+        }
+
+        /* Très petits écrans : 320px */
+        @media (max-width: 360px) {
+            .wk-wrap { grid-template-columns: 26px 1fr 36px; }
+            .wk-cur-num { font-size: 14px; }
+            .wk-media { height: min(56vw, calc(100vh - 210px)); }
+            .wk-title { font-size: clamp(17px, 8vw, 32px); }
+            .wk-tbtn { font-size: 5.5px; letter-spacing: .08em; }
+        }
     </style>
 </head>
 
