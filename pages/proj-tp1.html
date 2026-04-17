@@ -53,7 +53,7 @@
         <div class="proj-v2-right">
             <div class="proj-v2-media">
                 <div style="position:relative;padding-bottom:56.25%;height:0;border-radius:12px;overflow:hidden;background:#000;">
-                    <iframe src="https://www.youtube.com/embed/-SEqFveDJwc?autoplay=1&mute=1&loop=1&playlist=-SEqFveDJwc"
+                    <iframe id="yt-player" src="https://www.youtube.com/embed/-SEqFveDJwc?autoplay=1&mute=1&loop=1&playlist=-SEqFveDJwc&enablejsapi=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen title="Vidéo promo Cégep de Matane"></iframe>
@@ -69,5 +69,16 @@
         <button class="footer-pill footer-up" onclick="window.scrollTo({top:0,behavior:'smooth'})">GO UP &#8593;</button>
     </footer>
     <script src="../scripts/script.js"></script>
+    <script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+    var ytPlayer;
+    function onYouTubeIframeAPIReady() {
+        ytPlayer = new YT.Player('yt-player', {
+            events: { onStateChange: function(e) { if (e.data === 0) { ytPlayer.seekTo(0); ytPlayer.playVideo(); } } }
+        });
+    }
+    </script>
 </body>
 </html>
