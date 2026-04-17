@@ -504,14 +504,27 @@
         }
 
         @media (max-width: 600px) {
-            .wk-wrap { grid-template-columns: 40px 1fr 40px; }
-            .wk-left,
-            .wk-right { padding: 1.5rem 0 2rem; }
-            .wk-list-item { padding: 1.1rem 1.5rem; }
-            .wk-list-item:hover { padding-left: 2.2rem; }
+            .wk-wrap { grid-template-columns: 36px 1fr 36px; }
+            .wk-left, .wk-right { padding: 1rem 0 1.5rem; }
+            .wk-media { width: 98%; height: min(52vw, calc(100vh - 260px)); }
+            .wk-info  { width: 98%; padding: 0 .5rem; }
+            .wk-info-title { font-size: clamp(28px, 10vw, 52px); }
+            .wk-info-client { font-size: 9px; }
+            .wk-info-tags { font-size: 8px; }
+            .wk-list-item { padding: 1rem 1.2rem; gap: 1rem; }
+            .wk-list-item:hover { padding-left: 1.8rem; }
             .wk-list-top,
-            .wk-list-footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+            .wk-list-footer { padding-left: 1.2rem; padding-right: 1.2rem; }
             .wk-list-cat-badge { display: none; }
+            .wk-toggle { gap: .3rem; }
+            .wk-tbtn { font-size: 7px; padding: .3rem .5rem; }
+            .wk-prog-bar { width: 1.5px; }
+        }
+
+        @media (max-width: 400px) {
+            .wk-wrap { grid-template-columns: 28px 1fr 28px; }
+            .wk-cur-num { font-size: 16px; }
+            .wk-total-str { font-size: 7px; }
         }
     </style>
 </head>
